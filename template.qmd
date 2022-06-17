@@ -46,8 +46,6 @@ classoption: preprint, 3p, authoryear
 bibliography: bibliography.bib
 linenumbers: false
 number-sections: true
-# Use a CSL with `citation_package = "default"`
-# csl: https://www.zotero.org/styles/elsevier-harvard
 format:
     elsevier-pdf:
         keep-tex: true

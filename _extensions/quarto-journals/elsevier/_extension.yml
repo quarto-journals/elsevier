@@ -5,6 +5,8 @@ contributes:
   format:
     common:
       date-format: full
+      filters:
+        - elsevier.lua
     pdf:
       citation-package: natbib
       template-partials:
