@@ -50,7 +50,6 @@ format:
     elsevier-pdf:
         keep-tex: true
         cite-method: natbib
-
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
@@ -76,7 +75,7 @@ To use one of these, add it in the header using, for example, `biblio-style: mod
 
 ## Using CSL 
 
-If `citation_package` is set to `default` in `elsevier_article()`, then pandoc is used for citations instead of `natbib`. In this case, the `csl` option is used to format the references. Alternative `csl` files are available from <https://www.zotero.org/styles?q=elsevier>. These can be downloaded
+If `cite-method` is set to `citeproc` in `elsevier_article()`, then pandoc is used for citations instead of `natbib`. In this case, the `csl` option is used to format the references. By default, this template will provide an appropriate style, but alternative `csl` files are available from <https://www.zotero.org/styles?q=elsevier>. These can be downloaded
 and stored locally, or the url can be used as in the example header.
 
 # Equations
@@ -89,29 +88,32 @@ $$
   \alpha,\beta,x > 0 .
 $$
 
-Here is another:
-\begin{align}
-  a^2+b^2=c^2.
-\end{align}
-
-Inline equations: $\sum_{i = 2}^\infty\{\alpha_i^\beta\}$
+Inline equations work as well: $\sum_{i = 2}^\infty\{\alpha_i^\beta\}$
 
 # Figures and tables
 
-Figure \ref{fig2} is generated using an R chunk.
+@fig-meaningless is generated using an R chunk.
 
-```{r fig2, fig.width = 5, fig.height = 5, fig.align='center', out.width="50%", fig.cap = "\\label{fig2}A meaningless scatterplot.", echo = FALSE}
+```{r}
+#| label: fig-meaningless
+#| fig-cap: A meaningless scatterplot
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+#| out-width: 50%
+#| echo: false
 plot(runif(25), runif(25))
 ```
 
 # Tables coming from R
 
-Tables can also be generated using R chunks, as shown in Table \ref{tab1} for example.
+Tables can also be generated using R chunks, as shown in @tbl-simple example.
 
-```{r tab1, echo = TRUE}
-knitr::kable(head(mtcars)[,1:4], 
-    caption = "\\label{tab1}Caption centered above table"
-)
+```{r}
+#| label: tbl-simple
+#| tbl-cap: Caption centered above table
+#| echo: true
+knitr::kable(head(mtcars)[,1:4])
 ```
 
 # References {-}
