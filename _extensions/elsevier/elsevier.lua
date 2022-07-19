@@ -3,6 +3,16 @@ local function setBibStyle(meta, style)
   quarto.doc.addFormatResource('bib/' .. style .. '.bst')
 end
 
+local function addClassOption(meta, option)
+  if meta['classoption'] == nil then
+    meta['classoption'] = pandoc.List({})
+  end
+
+  if not meta['classoption']:includes(option) then
+    meta['classoption']:insert(option)
+  end
+end
+
 -- cite style constants
 local kBibStyleAuthYr = 'elsarticle-harv'
 local kBibStyleNumber = 'elsarticle-num'
@@ -22,10 +32,12 @@ return {
 
         -- read the journal settings
         local journal = meta['journal']
+        local citestyle = nil
+        local layout = nil 
         if journal ~= nil then         
-          local citestyle = journal['cite-style']
+          citestyle = journal['cite-style']
+          layout = journal['layout']
         end
-
 
         -- process the site style
         if citestyle ~= nil then
@@ -44,6 +56,11 @@ return {
           setBibStyle(meta, kBibStyleUnknown)
         end
 
+        -- process the layout
+        if layout ~= nil then
+          layout = pandoc.utils.stringify(layout)
+          addClassOption(layout)
+        end
 
         return meta
       end

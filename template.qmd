@@ -51,6 +51,8 @@ format:
         keep-tex: true
         journal:
           cite-style: authoryear # numberednames | authoryear | numbered
+          layout: preprint # preprint | review | doubleblind
+
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
