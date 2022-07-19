@@ -44,53 +44,74 @@ return {
             meta['csl'] = quarto.path.resolve('elsevier-harvard.csl')
         end
 
-        -- read the journal settings
-        local journal = meta['journal']
-        local citestyle = nil
-        local layout = nil 
-        local jType = nil
-        if journal ~= nil then         
-          citestyle = journal['cite-style']
-          layout = journal['layout']
-          jType = journal['type']
-        end
 
-        -- process the site style
-        if citestyle ~= nil then
-          citestyle = pandoc.utils.stringify(citestyle)
-        else 
-          citestyle = kBibStyleDefault
-        end
+        if quarto.doc.isFormat("pdf") then
+          -- read the journal settings
+          local journal = meta['journal']
+          local citestyle = nil
+          local layout = nil 
+          local jType = nil
+          local longtitle = false
+          local endfloat = false
 
-        if citestyle == 'authoryear' then
-          setBibStyle(meta, kBibStyleAuthYr)
-        elseif citestyle == 'numbered' then
-          setBibStyle(meta, kBibStyleNumber)
-        elseif citestyle == 'numberednames' then
-          setBibStyle(meta, kBibStyleNumberName)
-        else 
-          error("Unknown journal cite-style " .. citestyle .. "\nPlease use one of " .. printList(kBibStyles))
-          setBibStyle(meta, kBibStyleUnknown)
-        end
+          if journal ~= nil then         
+            citestyle = journal['cite-style']
+            layout = journal['layout']
+            jType = journal['type']
 
-        -- process the layout
-        if layout ~= nil then
-          layout = pandoc.utils.stringify(layout)
-          if kLayouts:includes(layout) then
-            addClassOption(meta, layout)
-          else
-            error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
+            longtitle = journal['longtitle'] ~= nil and journal['longtitle']
+            endfloat = journal['endfloat'] ~= nil and journal['endfloat']
           end
-        end
 
-        -- process the type
-        if jType ~= nil then
-          jType = pandoc.utils.stringify(jType)
-          if kTypes:includes(jType) then
-            addClassOption(meta, jType)
-          else
-            error("Unknown journal type " .. jType .. "\nPlease use one of " .. printList(kTypes))
+          -- process the site style
+          if citestyle ~= nil then
+            citestyle = pandoc.utils.stringify(citestyle)
+          else 
+            citestyle = kBibStyleDefault
           end
+
+          if citestyle == 'authoryear' then
+            setBibStyle(meta, kBibStyleAuthYr)
+          elseif citestyle == 'numbered' then
+            setBibStyle(meta, kBibStyleNumber)
+          elseif citestyle == 'numberednames' then
+            setBibStyle(meta, kBibStyleNumberName)
+          else 
+            error("Unknown journal cite-style " .. citestyle .. "\nPlease use one of " .. printList(kBibStyles))
+            setBibStyle(meta, kBibStyleUnknown)
+          end
+
+          -- process the layout
+          if layout ~= nil then
+            layout = pandoc.utils.stringify(layout)
+            if kLayouts:includes(layout) then
+              addClassOption(meta, layout)
+            else
+              error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
+            end
+          end
+
+          -- process the type
+          if jType ~= nil then
+            jType = pandoc.utils.stringify(jType)
+            if kTypes:includes(jType) then
+              addClassOption(meta, jType)
+            else
+              error("Unknown journal type " .. jType .. "\nPlease use one of " .. printList(kTypes))
+            end
+          end
+
+          -- allow long titles
+          if longtitle then
+            addClassOption(meta, 'longtitle')
+          end
+
+          -- allow endfloat
+          if endfloat then
+            quarto.doc.useLatexPackage('endfloat')
+            addClassOption(meta, 'endfloat')
+          end
+
         end
 
         return meta

@@ -42,7 +42,6 @@ keywords:
   - keyword2
 #journal: "An awesome journal"
 date: last-modified
-#classoption: preprint, 1p, authoryear
 bibliography: bibliography.bib
 linenumbers: false
 number-sections: true
@@ -51,8 +50,10 @@ format:
         keep-tex: true
         journal:
           cite-style: authoryear # numberednames | authoryear | numbered
-          layout: preprint # preprint | review | doubleblind
+          layout: review # preprint | review | doubleblind
           type: 3p # 1p | 3p | 5p
+          longtitle: false
+          endfloat: false
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
