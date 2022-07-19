@@ -42,14 +42,15 @@ keywords:
   - keyword2
 #journal: "An awesome journal"
 date: last-modified
-classoption: preprint, 3p, authoryear
+#classoption: preprint, 1p, authoryear
 bibliography: bibliography.bib
 linenumbers: false
 number-sections: true
 format:
     elsevier-pdf:
         keep-tex: true
-        cite-method: natbib
+        journal:
+          cite-style: authoryear # numberednames | authoryear | numbered
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
