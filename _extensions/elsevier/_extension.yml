@@ -10,9 +10,9 @@ contributes:
     pdf:
       documentclass: elsarticle
       template-partials: ["partials/before-body.tex", "partials/title.tex"]
-      number-sections: true
       format-resources:
         - elsarticle.cls
       cite-method: natbib
+      number-sections: true
     html:
       theme: styles/elsevier.scss

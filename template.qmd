@@ -45,7 +45,6 @@ keywords:
 #journal: "An awesome journal"
 date: last-modified
 bibliography: bibliography.bib
-number-sections: true
 format:
     elsevier-pdf:
         keep-tex: true
