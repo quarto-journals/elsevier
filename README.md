@@ -1,4 +1,4 @@
-# elsevier
+# Elsevier
 
 This Quarto format will help you create documents for journals published by Elsevier. For more about producing LaTeX output for Elsevier journals, see <https://www.elsevier.com/authors/policies-and-guidelines/latex-instructions>.
 
