@@ -1,6 +1,33 @@
+-- cite style constants
+local kBibStyleDefault = 'numberednames'
+local kBibStyles = {'numbered','numberednames','authoryear'}
+local kBibStyleAuthYr = 'elsarticle-harv'
+local kBibStyleNumber = 'elsarticle-num'
+local kBibStyleNumberName = 'elsarticle-num-names'
+local kBibStyleUnknown = kBibStyleNumberName
+
+-- layout and style
+local kFormatting = pandoc.List({'preprint', 'review', 'doubleblind'})
+local kModels = pandoc.List({'1p', '3p', '5p'})
+
+
+
 local function setBibStyle(meta, style) 
   meta['biblio-style'] = style
   quarto.doc.addFormatResource('bib/' .. style .. '.bst')
+end
+
+local function hasClassOption(meta, option) 
+  if meta['classoption'] == nil then
+    return false
+  end
+
+  for i,v in ipairs(meta['classoption']) do
+    if v[1].text == option then
+      return true
+    end
+  end
+  return false
 end
 
 local function addClassOption(meta, option)
@@ -8,8 +35,8 @@ local function addClassOption(meta, option)
     meta['classoption'] = pandoc.List({})
   end
 
-  if not meta['classoption']:includes(option) then
-    meta['classoption']:insert(option)
+  if not hasClassOption(meta, option) then
+    meta['classoption']:insert({ pandoc.Str(option)})
   end
 end
 
@@ -23,17 +50,7 @@ local function printList(list)
   return result
 end
 
--- cite style constants
-local kBibStyleAuthYr = 'elsarticle-harv'
-local kBibStyleNumber = 'elsarticle-num'
-local kBibStyleNumberName = 'elsarticle-num-names'
-local kBibStyleUnknown = kBibStyleNumberName
 
-local kBibStyleDefault = 'numberednames'
-local kBibStyles = {'numbered','numberednames','authoryear'}
-
-local kLayouts = pandoc.List({'preprint', 'review', 'doubleblind'})
-local kTypes = pandoc.List({'1p', '3p', '5p'})
 
 return {
     {
@@ -46,21 +63,17 @@ return {
 
 
         if quarto.doc.isFormat("pdf") then
+         
           -- read the journal settings
           local journal = meta['journal']
           local citestyle = nil
-          local layout = nil 
-          local jType = nil
-          local longtitle = false
-          local endfloat = false
+          local formatting = nil 
+          local model = nil
 
           if journal ~= nil then         
             citestyle = journal['cite-style']
-            layout = journal['layout']
-            jType = journal['type']
-
-            longtitle = journal['longtitle'] ~= nil and journal['longtitle']
-            endfloat = journal['endfloat'] ~= nil and journal['endfloat']
+            formatting = journal['formatting']
+            model = journal['model']
           end
 
           -- process the site style
@@ -82,36 +95,31 @@ return {
           end
 
           -- process the layout
-          if layout ~= nil then
-            layout = pandoc.utils.stringify(layout)
-            if kLayouts:includes(layout) then
-              addClassOption(meta, layout)
+          if formatting ~= nil then
+            formatting = pandoc.utils.stringify(formatting)
+            if kFormatting:includes(formatting) then
+              addClassOption(meta, formatting)
             else
-              error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
+              error("Unknown journal formatting " .. formatting .. "\nPlease use one of " .. printList(kFormatting))
             end
           end
 
           -- process the type
-          if jType ~= nil then
-            jType = pandoc.utils.stringify(jType)
-            if kTypes:includes(jType) then
-              addClassOption(meta, jType)
+          if model ~= nil then
+            model = pandoc.utils.stringify(model)
+            if kModels:includes(model) then
+              addClassOption(meta, model)
             else
-              error("Unknown journal type " .. jType .. "\nPlease use one of " .. printList(kTypes))
+              error("Unknown journal model " .. model .. "\nPlease use one of " .. printList(kModels))
             end
           end
 
-          -- allow long titles
-          if longtitle then
-            addClassOption(meta, 'longtitle')
+          -- if this is two column layout, then specially handle long tables
+          if hasClassOption(meta, 'twocolumn') or model == '5p' then
+            quarto.doc.includeFile('in-header', 'include-in-header.tex')
           end
 
-          -- allow endfloat
-          if endfloat then
-            quarto.doc.useLatexPackage('endfloat')
-            addClassOption(meta, 'endfloat')
-          end
-
+          
         end
 
         return meta

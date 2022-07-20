@@ -13,7 +13,7 @@ author:
           postal-code: Postal Code
     attributes:
         corresponding: true
-    notes: This is the first author footnote.
+    note: This is the first author footnote.
   - name: Bob Security
     email: bob@example.com
     affiliations:
@@ -24,11 +24,13 @@ author:
           city: City
           state: State
           postal-code: Postal Code
-    notes: Another author footnote
+    note: |
+      Another author footnote, this is a very long footnote and it should be a really long footnote. But this footnote is not yet sufficiently long enough to make two lines of footnote text.
   - name: Cat Memes
     email: cat@example.com
     affiliations:
         - ref: another-u
+    note: Yet another author footnote.
   - name: Derek Zoolander
     email: derek@example.com
     affilations:
@@ -49,11 +51,10 @@ format:
     elsevier-pdf:
         keep-tex: true
         journal:
+          formatting: preprint # preprint | review | doubleblind
+          model: 5p # 1p | 3p | 5p
+          # layout: default | twocolumn
           cite-style: authoryear # numberednames | authoryear | numbered
-          layout: review # preprint | review | doubleblind
-          type: 3p # 1p | 3p | 5p
-          longtitle: false
-          endfloat: false
 ---
 
 Please make sure that your manuscript follows the guidelines in the 

@@ -8,8 +8,7 @@ contributes:
       filters:
         - elsevier.lua
     pdf:
-      template-partials:
-        [before-body.tex, doc-class.tex, title.tex, elsarticle.cls]
+      template-partials: [before-body.tex, doc-class.tex, title.tex]
       number-sections: true
       format-resources:
         - elsarticle.cls
