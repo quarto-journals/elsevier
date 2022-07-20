@@ -53,6 +53,11 @@ format:
           model: 3p # 1p | 3p | 5p
           layout: onecolumn # onecolumn | twocolumn
           cite-style: authoryear # numberednames | authoryear | numbered
+          graphical-abstract: "![](placeholder.png)"
+          highlights:
+            - Highlight 1
+            - Highlight 2 
+            - Highlight 3
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
