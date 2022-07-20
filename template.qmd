@@ -45,15 +45,14 @@ keywords:
 #journal: "An awesome journal"
 date: last-modified
 bibliography: bibliography.bib
-linenumbers: false
 number-sections: true
 format:
     elsevier-pdf:
         keep-tex: true
         journal:
           formatting: preprint # preprint | review | doubleblind
-          model: 5p # 1p | 3p | 5p
-          # layout: default | twocolumn
+          model: 3p # 1p | 3p | 5p
+          layout: onecolumn # onecolumn | twocolumn
           cite-style: authoryear # numberednames | authoryear | numbered
 ---
 
@@ -70,7 +69,8 @@ Here are two sample references: @Feynman1963118 [@Dirac1953888].
 
 By default, natbib will be used with the `authoryear` style, set in `classoption` variable in YAML. 
 You can sets extra options with `natbiboptions` variable in YAML header. Example 
-```yaml
+
+```
 natbiboptions: longnamesfirst,angle,semicolon
 ```
 
