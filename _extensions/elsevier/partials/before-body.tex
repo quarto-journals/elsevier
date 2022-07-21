@@ -16,9 +16,11 @@ $for(by-author)$
 $if(by-author.note.text)$\fntext[fn$by-author.note.number$]{$by-author.note.text$}$endif$
 $endfor$
         
+$if(abstract)$
 \begin{abstract}
 $abstract$
 \end{abstract}
+$endif$
 
 $if(journal.graphical-abstract)$\begin{graphicalabstract}
 $journal.graphical-abstract$
@@ -37,4 +39,3 @@ $if(keywords)$
 \end{keyword}
 $endif$
 \end{frontmatter}
-

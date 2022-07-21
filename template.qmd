@@ -36,9 +36,7 @@ author:
     affilations:
         - ref: some-tech
 abstract: |
-  This is the abstract.
-
-  It consists of two paragraphs.
+  This is the abstract. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum augue turpis, dictum non malesuada a, volutpat eget velit. Nam placerat turpis purus, eu tristique ex tincidunt et. Mauris sed augue eget turpis ultrices tincidunt. Sed et mi in leo porta egestas. Aliquam non laoreet velit. Nunc quis ex vitae eros aliquet auctor nec ac libero. Duis laoreet sapien eu mi luctus, in bibendum leo molestie. Sed hendrerit diam diam, ac dapibus nisl volutpat vitae. Aliquam bibendum varius libero, eu efficitur justo rutrum at. Sed at tempus elit.
 keywords: 
   - keyword1
   - keyword2
@@ -51,7 +49,6 @@ format:
     journal:
       formatting: preprint
       model: 3p
-      layout: twocolumn
       cite-style: authoryear
 ---
 
