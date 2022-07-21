@@ -1,6 +1,6 @@
 -- cite style constants
-local kBibStyleDefault = 'numberednames'
-local kBibStyles = {'numbered','numberednames','authoryear'}
+local kBibStyleDefault = 'number'
+local kBibStyles = {'number','numbername','authoryear'}
 local kBibStyleAuthYr = 'elsarticle-harv'
 local kBibStyleNumber = 'elsarticle-num'
 local kBibStyleNumberName = 'elsarticle-num-names'
@@ -50,95 +50,112 @@ local function printList(list)
   return result
 end
 
-
+local bibstyle = kBibStyleDefault
 
 return {
-    {
-      Meta = function(meta)
-        -- If citeproc is being used, switch to the proper
-        -- CSL file
-        if quarto.doc.citeMethod() == 'citeproc' and meta['csl'] == nil then
-            meta['csl'] = quarto.utils.resolvePath('bib/elsevier-harvard.csl')
-        end
-
-
-        if quarto.doc.isFormat("pdf") then
-         
-          -- read the journal settings
-          local journal = meta['journal']
-          local citestyle = nil
-          local formatting = nil 
-          local model = nil
-          local layout = nil
-
-          if journal ~= nil then         
-            citestyle = journal['cite-style']
-            formatting = journal['formatting']
-            model = journal['model']
-            layout = journal['layout']
-          end
-
-          -- process the site style
-          if citestyle ~= nil then
-            citestyle = pandoc.utils.stringify(citestyle)
-          else 
-            citestyle = kBibStyleDefault
-          end
-
-          if citestyle == 'authoryear' then
-            setBibStyle(meta, kBibStyleAuthYr)
-          elseif citestyle == 'numbered' then
-            setBibStyle(meta, kBibStyleNumber)
-          elseif citestyle == 'numberednames' then
-            setBibStyle(meta, kBibStyleNumberName)
-          else 
-            error("Unknown journal cite-style " .. citestyle .. "\nPlease use one of " .. printList(kBibStyles))
-            setBibStyle(meta, kBibStyleUnknown)
-          end
-
-          -- process the layout
-          if formatting ~= nil then
-            formatting = pandoc.utils.stringify(formatting)
-            if kFormatting:includes(formatting) then
-              addClassOption(meta, formatting)
-            else
-              error("Unknown journal formatting " .. formatting .. "\nPlease use one of " .. printList(kFormatting))
-            end
-          end
-
-          -- process the type
-          if model ~= nil then
-            model = pandoc.utils.stringify(model)
-            if kModels:includes(model) then
-              addClassOption(meta, model)
-            else
-              error("Unknown journal model " .. model .. "\nPlease use one of " .. printList(kModels))
-            end
-          end
-
-          -- 5p models should be two column always
-          if model == '5p' and layout == nil then
-            layout = 'twocolumn'             
-          end
-
-          -- process the type
-          if layout ~= nil then
-            layout = pandoc.utils.stringify(layout)
-            if kLayouts:includes(layout) then
-              addClassOption(meta, layout)
-              if layout == 'twocolumn' then
-                quarto.doc.includeFile('in-header', 'partials/_two-column-longtable.tex')
-              end
-            else
-              error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
-            end
-          end         
-        end
-
-        return meta
+  {
+    Meta = function(meta)
+      -- If citeproc is being used, switch to the proper
+      -- CSL file
+      if quarto.doc.citeMethod() == 'citeproc' and meta['csl'] == nil then
+          meta['csl'] = quarto.utils.resolvePath('bib/elsevier-harvard.csl')
       end
-    }
+
+      if quarto.doc.isFormat("pdf") then
+        
+        -- read the journal settings
+        local journal = meta['journal']
+        local citestyle = nil
+        local formatting = nil 
+        local model = nil
+        local layout = nil
+
+        if journal ~= nil then         
+          citestyle = journal['cite-style']
+          formatting = journal['formatting']
+          model = journal['model']
+          layout = journal['layout']
+        end
+
+        -- process the site style
+        if citestyle ~= nil then
+          citestyle = pandoc.utils.stringify(citestyle)
+        else 
+          citestyle = kBibStyleDefault
+        end
+
+        -- capture the bibstyle
+        bibstyle = citestyle
+        if citestyle == 'numbername' then
+          setBibStyle(meta, kBibStyleNumberName)
+          addClassOption(meta, 'number')
+        elseif citestyle == 'authoryear' then
+          setBibStyle(meta, kBibStyleAuthYr)
+          addClassOption(meta, 'authoryear')
+        elseif citestyle == 'number' then
+          setBibStyle(meta, kBibStyleNumber)
+          addClassOption(meta, 'number')
+        else 
+          error("Unknown journal cite-style " .. citestyle .. "\nPlease use one of " .. printList(kBibStyles))
+          setBibStyle(meta, kBibStyleUnknown)
+        end
+
+        -- process the layout
+        if formatting ~= nil then
+          formatting = pandoc.utils.stringify(formatting)
+          if kFormatting:includes(formatting) then
+            addClassOption(meta, formatting)
+          else
+            error("Unknown journal formatting " .. formatting .. "\nPlease use one of " .. printList(kFormatting))
+          end
+        end
+
+        -- process the type
+        if model ~= nil then
+          model = pandoc.utils.stringify(model)
+          if kModels:includes(model) then
+            addClassOption(meta, model)
+          else
+            error("Unknown journal model " .. model .. "\nPlease use one of " .. printList(kModels))
+          end
+        end
+
+        -- 5p models should be two column always
+        if model == '5p' and layout == nil then
+          layout = 'twocolumn'             
+        end
+
+        -- process the type
+        if layout ~= nil then
+          layout = pandoc.utils.stringify(layout)
+          if kLayouts:includes(layout) then
+            addClassOption(meta, layout)
+            if layout == 'twocolumn' then
+              quarto.doc.includeFile('in-header', 'partials/_two-column-longtable.tex')
+            end
+          else
+            error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
+          end
+        end         
+      end
+
+      return meta
+    end
+  }, 
+  {
+    Cite = function(cite) 
+      if bibstyle == 'number' then
+        -- If we are numbered, force citations into normal mode
+        -- as the author styles don't make sense
+        for i, v in ipairs(cite.citations) do
+          v.mode = 'NormalCitation'
+        end
+        return cite
+      end
+    end,
+    
   }
+}
   
 
 
