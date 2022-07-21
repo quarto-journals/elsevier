@@ -71,9 +71,9 @@ The Elsevier format supports a number of options for customizing the format and 
 
 `number` - use numbered formatting for citations (default).
 
-`authoryear` - use author / year formatting for citations.
+`number-name` - use numbered name formatting citations.
 
-`harvard` - use numbered name formatting citations.
+`authoryear` - use author / year formatting (harvard) for citations.
 
 Please refer to the specific journal for guidance.
 
