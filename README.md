@@ -39,6 +39,12 @@ The Elsevier format supports a number of options for customizing the format and 
 
 ---
 
+**`name`**
+
+The name of journal that this article will be submitted to. If not provided, this will default to 'Elsevier'.
+
+---
+
 **`formatting`**
 
 `preprint` - default, which produces a standard preprint format
@@ -97,6 +103,7 @@ For example:
 format:
   elsevier-pdf:
     journal:
+      name: Journal Name
       formatting: preprint
       model: 3p
       layout: twocolumn
