@@ -1,6 +1,6 @@
 title: Elsevier Journal Format
 author: Charles Teague
-version: 0.0.1
+version: 0.0.2
 contributes:
   formats:
     common:

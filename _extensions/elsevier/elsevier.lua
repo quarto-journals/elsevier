@@ -69,12 +69,14 @@ return {
         local formatting = nil 
         local model = nil
         local layout = nil
+        local name = nil
 
         if journal ~= nil then         
           citestyle = journal['cite-style']
           formatting = journal['formatting']
           model = journal['model']
           layout = journal['layout']
+          name = journal['name']
         end
 
         -- process the site style
@@ -137,6 +139,12 @@ return {
             error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
           end
         end         
+
+        -- process the name
+        if name ~= nil then
+          name = pandoc.utils.stringify(name)
+          quarto.doc.includeText('in-header', '\\journal{' .. name .. '}')
+        end
       end
 
       return meta

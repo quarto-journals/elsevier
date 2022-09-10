@@ -40,13 +40,13 @@ abstract: |
 keywords: 
   - keyword1
   - keyword2
-#journal: "An awesome journal"
 date: last-modified
 bibliography: bibliography.bib
 format:
   elsevier-pdf:
     keep-tex: true
     journal:
+      name: Journal Name
       formatting: preprint
       model: 3p
       cite-style: authoryear
