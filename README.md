@@ -106,8 +106,8 @@ format:
       name: Journal Name
       formatting: preprint
       model: 3p
-      layout: twocolumn
-      cite-style: numbered
+      layout: onecolumn
+      cite-style: number
       graphical-abstract: "![](abstract.png)"
       highlights:
         - Highlight 1
