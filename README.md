@@ -114,3 +114,45 @@ format:
         - Highlight 2 
         - Highlight 3
 ```
+
+## Additional Examples:
+
+### Two column format
+
+Note per Elsevier's instructions both model: 3p and layout: twocolumn should be specified for proper two column layout.
+
+```yaml
+format:
+  elsevier-pdf:
+    journal:
+      formatting: preprint
+      model: 3p
+      layout: twocolumn
+      cite-style: number
+```      
+
+### Include a graphical abstract and highlights
+
+```yaml
+format:
+  elsevier-pdf:
+    journal:
+      cite-style: authoryear
+      graphical-abstract: "![](abstract.png)"
+      highlights:
+        - Highlight 1
+        - Highlight 2 
+        - Highlight 3
+```
+
+### Put the title and abstract on their own page
+
+```yaml
+format:
+  elsevier-pdf:
+    journal:
+      cite-style: number
+    include-in-header: 
+      text: |
+        \newpageafter{author}
+```
