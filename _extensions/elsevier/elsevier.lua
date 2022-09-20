@@ -1,28 +1,28 @@
 -- cite style constants
 local kBibStyleDefault = 'number'
-local kBibStyles = {'number','numbername','authoryear'}
+local kBibStyles = { 'number', 'numbername', 'authoryear' }
 local kBibStyleAuthYr = 'elsarticle-harv'
 local kBibStyleNumber = 'elsarticle-num'
 local kBibStyleNumberName = 'elsarticle-num-names'
 local kBibStyleUnknown = kBibStyleNumberName
 
 -- layout and style
-local kFormatting = pandoc.List({'preprint', 'review', 'doubleblind'})
-local kModels = pandoc.List({'1p', '3p', '5p'})
-local kLayouts = pandoc.List({'onecolumn', 'twocolumn'})
+local kFormatting = pandoc.List({ 'preprint', 'review', 'doubleblind' })
+local kModels = pandoc.List({ '1p', '3p', '5p' })
+local kLayouts = pandoc.List({ 'onecolumn', 'twocolumn' })
 
 
-local function setBibStyle(meta, style) 
+local function setBibStyle(meta, style)
   meta['biblio-style'] = style
   quarto.doc.addFormatResource('bib/' .. style .. '.bst')
 end
 
-local function hasClassOption(meta, option) 
+local function hasClassOption(meta, option)
   if meta['classoption'] == nil then
     return false
   end
 
-  for i,v in ipairs(meta['classoption']) do
+  for i, v in ipairs(meta['classoption']) do
     if v[1].text == option then
       return true
     end
@@ -36,14 +36,14 @@ local function addClassOption(meta, option)
   end
 
   if not hasClassOption(meta, option) then
-    meta['classoption']:insert({ pandoc.Str(option)})
+    meta['classoption']:insert({ pandoc.Str(option) })
   end
 end
 
-local function printList(list) 
+local function printList(list)
   local result = ''
   local sep = ''
-  for i,v in ipairs(list) do
+  for i, v in ipairs(list) do
     result = result .. sep .. v
     sep = ', '
   end
@@ -58,20 +58,20 @@ return {
       -- If citeproc is being used, switch to the proper
       -- CSL file
       if quarto.doc.citeMethod() == 'citeproc' and meta['csl'] == nil then
-          meta['csl'] = quarto.utils.resolvePath('bib/elsevier-harvard.csl')
+        meta['csl'] = quarto.utils.resolvePath('bib/elsevier-harvard.csl')
       end
 
       if quarto.doc.isFormat("pdf") then
-        
+
         -- read the journal settings
         local journal = meta['journal']
         local citestyle = nil
-        local formatting = nil 
+        local formatting = nil
         local model = nil
         local layout = nil
         local name = nil
 
-        if journal ~= nil then         
+        if journal ~= nil then
           citestyle = journal['cite-style']
           formatting = journal['formatting']
           model = journal['model']
@@ -82,7 +82,7 @@ return {
         -- process the site style
         if citestyle ~= nil then
           citestyle = pandoc.utils.stringify(citestyle)
-        else 
+        else
           citestyle = kBibStyleDefault
         end
 
@@ -97,7 +97,7 @@ return {
         elseif citestyle == 'number' then
           setBibStyle(meta, kBibStyleNumber)
           addClassOption(meta, 'number')
-        else 
+        else
           error("Unknown journal cite-style " .. citestyle .. "\nPlease use one of " .. printList(kBibStyles))
           setBibStyle(meta, kBibStyleUnknown)
         end
@@ -124,7 +124,7 @@ return {
 
         -- 5p models should be two column always
         if model == '5p' and layout == nil then
-          layout = 'twocolumn'             
+          layout = 'twocolumn'
         end
 
         -- process the type
@@ -138,7 +138,7 @@ return {
           else
             error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
           end
-        end         
+        end
 
         -- process the name
         if name ~= nil then
@@ -149,9 +149,9 @@ return {
 
       return meta
     end
-  }, 
+  },
   {
-    Cite = function(cite) 
+    Cite = function(cite)
       if bibstyle == 'number' then
         -- If we are numbered, force citations into normal mode
         -- as the author styles don't make sense
@@ -161,11 +161,6 @@ return {
         return cite
       end
     end,
-    
+
   }
 }
-  
-
-
-
-  
