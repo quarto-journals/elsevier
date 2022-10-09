@@ -14,7 +14,7 @@ local kLayouts = pandoc.List({ 'onecolumn', 'twocolumn' })
 
 local function setBibStyle(meta, style)
   meta['biblio-style'] = style
-  quarto.doc.addFormatResource('bib/' .. style .. '.bst')
+  quarto.doc.add_format_resource('bib/' .. style .. '.bst')
 end
 
 local function hasClassOption(meta, option)
@@ -57,11 +57,11 @@ return {
     Meta = function(meta)
       -- If citeproc is being used, switch to the proper
       -- CSL file
-      if quarto.doc.citeMethod() == 'citeproc' and meta['csl'] == nil then
-        meta['csl'] = quarto.utils.resolvePath('bib/elsevier-harvard.csl')
+      if quarto.doc.cite_method() == 'citeproc' and meta['csl'] == nil then
+        meta['csl'] = quarto.utils.resolve_path('bib/elsevier-harvard.csl')
       end
 
-      if quarto.doc.isFormat("pdf") then
+      if quarto.doc.is_format("pdf") then
 
         -- read the journal settings
         local journal = meta['journal']
@@ -133,7 +133,7 @@ return {
           if kLayouts:includes(layout) then
             addClassOption(meta, layout)
             if layout == 'twocolumn' then
-              quarto.doc.includeFile('in-header', 'partials/_two-column-longtable.tex')
+              quarto.doc.include_file('in-header', 'partials/_two-column-longtable.tex')
             end
           else
             error("Unknown journal layout " .. layout .. "\nPlease use one of " .. printList(kLayouts))
@@ -143,7 +143,7 @@ return {
         -- process the name
         if name ~= nil then
           name = pandoc.utils.stringify(name)
-          quarto.doc.includeText('in-header', '\\journal{' .. name .. '}')
+          quarto.doc.include_text('in-header', '\\journal{' .. name .. '}')
         end
       end
 
