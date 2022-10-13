@@ -7,7 +7,7 @@ $if(by-author.note.text)$\fnref{fn$by-author.note.number$}$endif$}
 $if(by-author.email)$ \ead{$by-author.email$} $endif$
 $endfor$
 $for(by-affiliation)$
-\affiliation[$it.number$]{organization={$it.name$},$if(it.address)$addressline={$it.address$}$endif$$if(it.city)$$if(it.address)$,$endif$city={$it.city$}$endif$$if(it.country)$$if(it.city)$,$elseif(it.address)$,$endif$country={$it.country$}$endif$$if(it.postal-code)$$if(it.country)$,$elseif(it.city)$,$elseif(it.address)$,$endif$postcode={$it.postal-code$}$endif$}
+\affiliation[$it.number$]{organization={$it.name$$if(it.department)$, $it.department$$endif$},$if(it.address)$addressline={$it.address$}$endif$$if(it.city)$$if(it.address)$,$endif$city={$it.city$}$endif$$if(it.country)$$if(it.city)$,$elseif(it.address)$,$endif$country={$it.country$},countrysep={,}$endif$$if(it.postal-code)$$if(it.country)$,$elseif(it.city)$,$elseif(it.address)$,$endif$postcode={$it.postal-code$}$endif$,postcodesep={}}
 $endfor$
 
 \cortext[cor1]{Corresponding author}
@@ -38,3 +38,4 @@ $if(keywords)$
 \end{keyword}
 $endif$
 \end{frontmatter}
+    
