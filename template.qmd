@@ -1,5 +1,6 @@
 ---
 title: Short Paper
+subtitle: A Short Subtitle
 author:
   - name: Alice Anonymous
     email: alice@example.com

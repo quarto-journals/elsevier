@@ -1,6 +1,6 @@
 
 \begin{frontmatter}
-\title{$title$}
+\title{$title$$if(subtitle)$ \\\large{$subtitle$} $endif$}
 $for(by-author)$\author[$for(by-author.affiliations)$$it.number$$sep$,$endfor$]{$by-author.name.literal$%
 $if(by-author.attributes.corresponding)$\corref{cor1}$endif$%
 $if(by-author.note.text)$\fnref{fn$by-author.note.number$}$endif$}
