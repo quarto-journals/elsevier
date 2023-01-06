@@ -13,8 +13,10 @@ local kLayouts = pandoc.List({ 'onecolumn', 'twocolumn' })
 
 
 local function setBibStyle(meta, style)
-  meta['biblio-style'] = style
-  quarto.doc.add_format_resource('bib/' .. style .. '.bst')
+  if meta['biblio-style'] == nil then
+    meta['biblio-style'] = style
+    quarto.doc.add_format_resource('bib/' .. style .. '.bst')
+  end
 end
 
 local function hasClassOption(meta, option)
