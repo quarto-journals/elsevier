@@ -81,6 +81,8 @@ The name of journal that this article will be submitted to. If not provided, thi
 
 `authoryear` - use author / year formatting (harvard) for citations.
 
+`super` - use numbered superscript formatting for citations.
+
 Please refer to the specific journal for guidance.
 
 ---

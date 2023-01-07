@@ -99,6 +99,9 @@ return {
         elseif citestyle == 'number' then
           setBibStyle(meta, kBibStyleNumber)
           addClassOption(meta, 'number')
+        elseif citestyle == 'super' then
+          addClassOption(meta, 'super')          
+          setBibStyle(meta, kBibStyleNumber)
         else
           error("Unknown journal cite-style " .. citestyle .. "\nPlease use one of " .. printList(kBibStyles))
           setBibStyle(meta, kBibStyleUnknown)

@@ -50,7 +50,7 @@ format:
       name: Journal Name
       formatting: preprint
       model: 3p
-      cite-style: authoryear
+      cite-style: super
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
