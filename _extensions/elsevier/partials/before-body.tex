@@ -35,6 +35,12 @@ $if(keywords)$
 \begin{keyword}
     $for(keywords/allbutlast)$$keywords$ \sep $endfor$
     $for(keywords/last)$$keywords$$endfor$
+    $if(JEL)$
+        \JEL{
+            $for(JEL/allbutlast)$$JEL$ \sep $endfor$
+            $for(JEL/last)$$JEL$$endfor$
+        }
+    $endif$
 \end{keyword}
 $endif$
 \end{frontmatter}
