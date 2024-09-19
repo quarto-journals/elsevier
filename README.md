@@ -75,11 +75,11 @@ The name of journal that this article will be submitted to. If not provided, thi
 
 **`cite-style`**
 
-`number` - use numbered formatting for citations (default).
+`number` - use numbered formatting for citations.
 
 `numbername` - use numbered name formatting citations.
 
-`authoryear` - use author / year formatting (harvard) for citations.
+`authoryear` - use author / year formatting (harvard) for citations (default).
 
 `super` - use numbered superscript formatting for citations.
 
