@@ -50,7 +50,7 @@ format:
       name: Journal Name
       formatting: preprint
       model: 3p
-      cite-style: super
+      cite-style: authoryear
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
@@ -64,16 +64,19 @@ For detailed instructions regarding the elsevier article class, see   <https://w
 
 Here are two sample references:  @Feynman1963118 @Dirac1953888.
 
-By default, natbib will be used with the `authoryear` style, set in `classoption` variable in YAML. 
-You can sets extra options with `natbiboptions` variable in YAML header. Example 
+With this template using elsevier class, natbib will be used. Three bibliographic style ﬁles (*.bst) are provided and their use controled by `cite-style` option: 
 
-```
+- `citestyle: number` (default)  will use `elsarticle-num.bst` - can be used for the numbered scheme
+- `citestyle: numbername` will use `elsarticle-num-names.bst` - can be used for numbered with new options of natbib.sty
+- `citestyle: authoryear` will use `elsarticle-harv.bst` — can be used for author year scheme
+
+This `citestyle` will insert the right `.bst` and set the correct `classoption` for `elsarticle` document class.
+
+Using `natbiboptions` variable in YAML header, you can set more options for `natbib` itself . Example 
+
+```yaml
 natbiboptions: longnamesfirst,angle,semicolon
 ```
-
-There are various more specific bibliography styles available at
-<https://support.stmdocs.in/wiki/index.php?title=Model-wise_bibliographic_style_files>. 
-To use one of these, add it in the header using, for example, `biblio-style: model1-num-names`.
 
 ## Using CSL 
 

@@ -52,7 +52,7 @@ local function printList(list)
   return result
 end
 
-local bibstyle = kBibStyleDefault
+local bibstyle
 
 return {
   {
@@ -157,7 +157,7 @@ return {
   },
   {
     Cite = function(cite)
-      if bibstyle == 'number' then
+      if bibstyle == 'number' or bibstyle == 'super' then
         -- If we are numbered, force citations into normal mode
         -- as the author styles don't make sense
         for i, v in ipairs(cite.citations) do
