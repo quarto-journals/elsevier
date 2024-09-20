@@ -1,3 +1,5 @@
+local kClassOpt = "classoption"
+
 -- cite style constants
 local kBibStyleDefault = 'number'
 local kBibStyles = { 'number', 'numbername', 'authoryear' }
@@ -20,25 +22,25 @@ local function setBibStyle(meta, style)
 end
 
 local function hasClassOption(meta, option)
-  if meta['classoption'] == nil then
-    return false
-  end
-
-  for i, v in ipairs(meta['classoption']) do
-    if v[1].text == option then
-      return true
+  if meta[kClassOpt] then
+    for i,v in ipairs(meta[kClassOpt]) do
+      if pandoc.utils.stringify(v) == option then
+        return true
+      end
     end
   end
   return false
 end
 
 local function addClassOption(meta, option)
-  if meta['classoption'] == nil then
-    meta['classoption'] = pandoc.List({})
+  if meta[kClassOpt] == nil then
+    meta[kClassOpt] = pandoc.List({})
+  elseif pandoc.utils.type(meta[kClassOpt]) == "Inlines" then
+    -- handle classoption: <value> as a string
+    meta[kClassOpt] = pandoc.List({meta[kClassOpt]})
   end
-
   if not hasClassOption(meta, option) then
-    meta['classoption']:insert({ pandoc.Str(option) })
+    meta[kClassOpt]:insert({ pandoc.Str(option) })
   end
 end
 
@@ -87,7 +89,6 @@ return {
         else
           citestyle = kBibStyleDefault
         end
-
         -- capture the bibstyle
         bibstyle = citestyle
         if citestyle == 'numbername' then
