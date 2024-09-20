@@ -49,7 +49,7 @@ format:
     journal:
       name: Journal Name
       formatting: preprint
-      model: 3p
+      # model: 3p # Don't set a model with preprint
       cite-style: authoryear
 ---
 
