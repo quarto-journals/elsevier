@@ -15,6 +15,10 @@ local kLayouts = pandoc.List({ 'onecolumn', 'twocolumn' })
 
 
 local function setBibStyle(meta, style)
+  -- .bst files are only supported with natbib
+  if quarto.doc.cite_method() ~= "natbib" then
+    return
+  end
   if meta['biblio-style'] == nil then
     meta['biblio-style'] = style
     quarto.doc.add_format_resource('bib/' .. style .. '.bst')
