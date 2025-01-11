@@ -75,6 +75,8 @@ The name of journal that this article will be submitted to. If not provided, thi
 
 **`cite-style`**
 
+This only works with natbib, that is, if you are _not_ using the `nonatbib` classoption.
+
 `number` - use numbered formatting for citations (default).
 
 `numbername` - use numbered name formatting citations.
@@ -96,6 +98,29 @@ Produces a separate page before the main document with a graphical abstract.
 **`highlights`**
 
 Produces a separate page before the main document with a list of highlights.
+
+---
+
+**`classoption`**
+
+Pass options to the elsarticle class.
+
+For example, the `nonatbib` option will allow you to use `citeproc` or `biblatex` as citation engines.
+
+Example using citeproc:
+```
+elsevier-pdf:
+  classoption: nonatbib
+  cite-method: citeproc
+```
+
+Example using biblatex:
+```
+elsevier-pdf:
+  classoption: nonatbib
+  cite-method: biblatex
+  biblatexoptions: "style=authoryear, maxcitenames=2, backend=biber"
+```
 
 ---
 
