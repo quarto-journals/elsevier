@@ -1,20 +1,20 @@
 %% 
-%% Copyright 2007-2020 Elsevier Ltd
+%% Copyright 2007-2024 Elsevier Ltd
 %% 
 %% This file is part of the 'Elsarticle Bundle'.
 %% ---------------------------------------------
 %% 
 %% It may be distributed under the conditions of the LaTeX Project Public
-%% License, either version 1.2 of this license or (at your option) any
+%% License, either version 1.3 of this license or (at your option) any
 %% later version.  The latest version of this license is in
 %%    http://www.latex-project.org/lppl.txt
-%% and version 1.2 or later is part of all distributions of LaTeX
+%% and version 1.3 or later is part of all distributions of LaTeX
 %% version 1999/12/01 or later.
 %% 
 %% The list of all files belonging to the 'Elsarticle Bundle' is
 %% given in the file `manifest.txt'.
 %%
-%% $Id: elsdoc.tex 192 2020-11-23 11:14:41Z rishi $
+%% $Id: elsdoc.tex 261 2024-04-09 06:37:35Z rishi $
 %%
 \documentclass[a4paper,12pt]{article}
 
@@ -71,7 +71,7 @@
 \author{Elsevier Ltd}
 \contact{elsarticle@stmdocs.in}
 
-\version{3.3}
+\version{3.4}
 \date{\today}
 \maketitle
 
@@ -143,10 +143,10 @@ works perfectly with \file{hyperref.sty} in combination with
 
 The package is available at author resources page at Elsevier
 (\url{http://www.elsevier.com/locate/latex}).
-It can also be found in any of the nodes of the Comprehensive
-\TeX{} Archive Network (\textsc{ctan}), one of the primary nodes
-being
-\url{http://tug.ctan.org/tex-archive/macros/latex/contrib/elsarticle/}.
+It can also be found in Comprehensive
+\TeX{} Archive Network (\textsc{ctan}), 
+\url{https://ctan.org/pkg/elsarticle}.
+
 Please download the \file{elsarticle.dtx} which is a composite
 class with documentation and \file{elsarticle.ins} which is the
 \LaTeX{} installer file. When we compile the
@@ -154,7 +154,8 @@ class with documentation and \file{elsarticle.ins} which is the
 \file{elsarticle.cls} by
 stripping off all the documentation from the \verb+*.dtx+ file.
 The class may be moved or copied to a place, usually,
-\verb+$TEXMF/tex/latex/elsevier/+, %$%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\verb+$TEXMF/tex/latex/+ %$%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\verb+elsevier/+, 
 or a folder which will be read                   
 by \LaTeX{} during document compilation.  The \TeX{} file
 database needs updation after moving/copying class file.  Usually,
@@ -251,7 +252,7 @@ There are two types of frontmatter coding:
 \item each author is
 connected to an affiliation with a footnote marker; hence all
 authors are grouped together and affiliations follow;
-\pagebreak
+%\pagebreak
 \item authors of same affiliations are grouped together and the
 relevant affiliation follows this group. 
 \end{enumerate}
@@ -286,6 +287,9 @@ An example of coding the first type is provided below.
    footnote is not yet sufficiently long enough to make two 
    lines of footnote text.}
  \fntext[fn3]{Yet another author footnote.}
+\end{vquote}
+
+\begin{vquote}
 
  \affiliation[1]{organization={Elsevier B.V.}, 
                  addressline={Radarweg 29},
@@ -295,12 +299,10 @@ An example of coding the first type is provided below.
 
  \affiliation[2]{organization={Sayahna Foundation},
                  addressline={JWRA 34, Jagathy}, 
-                 city={Trivandrum}
+                 city={Trivandrum},
                  postcode={695014}, 
                  country={India}}
-\end{vquote}
 
-\begin{vquote}
 
  \affiliation[3]{organization={STM Document Engineering 
                                Pvt Ltd.},
@@ -314,10 +316,14 @@ The output of the above \TeX{} source is given in Clips~\ref{clip1} and
 \ref{clip2}. The header portion or title area is given in
 Clip~\ref{clip1} and the footer area is given in Clip~\ref{clip2}.
 
+\vspace*{1pc}
+
 \def\rulecolor{blue!70}
 \src{Header of the title page.}
 \includeclip{1}{130 612 477 707}{1psingleauthorgroup.pdf}%%{elstest-1p.pdf}%single author group
 \def\rulecolor{orange}
+
+\pagebreak
 
 \def\rulecolor{blue!70}
 \src{Footer of the title page.}

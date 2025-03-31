@@ -6,16 +6,16 @@
 %%
 %% elsarticle.dtx  (with options: `class')
 %% 
-%% Copyright 2007-2020 Elsevier Ltd
+%% Copyright 2007-2024 Elsevier Ltd
 %% 
 %% This file is part of the 'Elsarticle Bundle'.
 %% -------------------------------------------
 %% 
 %% It may be distributed under the conditions of the LaTeX Project Public
-%% License, either version 1.2 of this license or (at your option) any
+%% License, either version 1.3 of this license or (at your option) any
 %% later version.  The latest version of this license is in
 %%    http://www.latex-project.org/lppl.txt
-%% and version 1.2 or later is part of all distributions of LaTeX
+%% and version 1.3 or later is part of all distributions of LaTeX
 %% version 1999/12/01 or later.
 %% 
 %% The list of all files belonging to the 'Elsarticle Bundle' is
@@ -25,8 +25,8 @@
 %%
 %%
  \def\RCSfile{elsarticle}%
- \def\RCSversion{3.3}%
- \def\RCSdate{2020/11/20}%
+ \def\RCSversion{3.4}%
+ \def\RCSdate{2024/04/04}%
  \def\@shortjnl{\relax}
  \def\@journal{Elsevier Ltd}
  \def\@company{Elsevier Ltd}
@@ -42,6 +42,8 @@
 \newif\ifdoubleblind \doubleblindfalse
 
 \newif\ifuseexplthreefunctions \useexplthreefunctionsfalse
+
+\RequirePackage[T1]{fontenc}
 
 \IfFileExists{expl3.sty}{%
   \global\useexplthreefunctionstrue%
@@ -164,7 +166,7 @@
 \let\@fnotes\@empty\let\@fnmark\@empty
 \def\fntext[#1]#2{\g@addto@macro\@fnotes{%
    \refstepcounter{fnote}\elsLabel{#1}%
-   \def\thefootnote{\c@fnote}%
+   \def\thefootnote{\thefnote}%
    \global\setcounter{footnote}{\c@fnote}%
    \footnotetext{#2}}}
 
@@ -385,6 +387,7 @@
     {
       op   .tl_set_x:N   = \l_organization_punc_tl,
       oraganizationsep   .tl_set_x:N   = \l_organization_punc_tl,
+      oraganisationsep   .tl_set_x:N   = \l_organization_punc_tl,
       ap   .tl_set_x:N   = \l_address_line_punc_tl,
       addresslinesep   .tl_set_x:N   = \l_address_line_punc_tl,
       cp   .tl_set_x:N   = \l_city_punc_tl,
@@ -395,6 +398,7 @@
       statesep   .tl_set_x:N   = \l_state_punc_tl,
       o    .code:n       = { \ca_organization[\l_organization_punc_tl]{#1} },
       organization    .code:n       = { \ca_organization[\l_organization_punc_tl]{#1} },
+      organisation    .code:n       = { \ca_organization[\l_organization_punc_tl]{#1} },
       a    .code:n       = { \ca_address_line[\l_address_line_punc_tl]{#1} },
       addressline    .code:n       = { \ca_address_line[\l_address_line_punc_tl]{#1} },
       c    .code:n       = { \ca_aff_city[\l_city_punc_tl]{#1} },
@@ -445,17 +449,32 @@
       {
        \keys_set:nn { stm / affiliation } { #2 }
       }
-     \csgappto{elsaddress}{
-      \def\baselinestretch{1}%
-      \refstepcounter{affn}
-      \xdef\@currentlabel{\theaffn}
-      \IfNoValueTF { #1 }
-        { }
-        { \elsLabel{#1} }
-      \textsuperscript{\theaffn}}
-      \csxappto{elsaddress}{
-        \csuse { ca_affiliation_values }
-        \par
+     \IfNoValueTF { #1 }
+      {
+        \csgappto{elsauthors}{%
+          \par\vspace*{6pt}\noindent
+          \bgroup\def\baselinestretch{1}%
+           \footnotesize\itshape%
+           \unskip\ignorespaces}
+        \csxappto{elsauthors}{\csuse { ca_affiliation_values }}
+        \csgappto{elsauthors}{\par\vspace*{6pt}
+          \noindent\unskip\ignorespaces
+          \gdef\authorsep{}
+        \egroup}
+      }
+      {
+        \csgappto{elsaddress}{
+        \def\baselinestretch{1}%
+        \refstepcounter{affn}
+        \xdef\@currentlabel{\theaffn}
+        \IfNoValueTF { #1 }
+          { }
+          { \elsLabel{#1} }
+        \textsuperscript{\theaffn}}
+        \csxappto{elsaddress}{
+          \csuse { ca_affiliation_values }
+          \par
+        }
       }
   }
   \ExplSyntaxOff
@@ -683,7 +702,12 @@
   \noindent\unskip{\Large\@elsarticlehighlightstitle}%*%
   \par\vskip12pt\noindent\unskip\ignorespaces\textbf{\@title}%
   \ifx\elsprelimauthors\@empty\relax\else%
-    \par\vskip6pt\noindent\unskip\ignorespaces\elsprelimauthors%
+    \par\vskip6pt\noindent\unskip\ignorespaces%
+    \ifdoubleblind%
+      \vspace*{2pc}
+    \else%
+      \elsprelimauthors%
+    \fi%
   \fi%
   \par\medskip\noindent\unskip\ignorespaces
  \begin{itemize}
@@ -697,7 +721,12 @@
   \noindent\unskip{\Large\@elsarticlegrabstitle}%*%
   \par\vskip12pt\noindent\unskip\ignorespaces\textbf{\@title}%
   \ifx\elsprelimauthors\@empty\relax\else%
-    \par\vskip6pt\noindent\unskip\ignorespaces\elsprelimauthors%
+    \par\vskip6pt\noindent\unskip\ignorespaces%
+    \ifdoubleblind%
+      \vspace*{2pc}
+    \else%
+      \elsprelimauthors%
+    \fi%
   \fi%
  \par\medskip\noindent\unskip\ignorespaces}
  {\egroup}
@@ -1017,7 +1046,7 @@
          \fi%
          \fi%
          \fi%
-         }
+         }%
        }%
      \let\@evenfoot\@oddfoot}
 \def\@seccntDot{.}
@@ -1315,7 +1344,7 @@
 \@makeother\=
 }{}}
 %%
-\def\appendixname{Appendix }
+\def\appendixname{Appendix}
 \renewcommand\appendix{\par
   \setcounter{section}{0}%
   \setcounter{subsection}{0}%
