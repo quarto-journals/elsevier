@@ -1,20 +1,20 @@
 %% 
-%% Copyright 2007-2020 Elsevier Ltd
+%% Copyright 2007-2025 Elsevier Ltd
 %% 
 %% This file is part of the 'Elsarticle Bundle'.
 %% ---------------------------------------------
 %% 
 %% It may be distributed under the conditions of the LaTeX Project Public
-%% License, either version 1.2 of this license or (at your option) any
+%% License, either version 1.3 of this license or (at your option) any
 %% later version.  The latest version of this license is in
 %%    http://www.latex-project.org/lppl.txt
-%% and version 1.2 or later is part of all distributions of LaTeX
+%% and version 1.3 or later is part of all distributions of LaTeX
 %% version 1999/12/01 or later.
 %% 
 %% The list of all files belonging to the 'Elsarticle Bundle' is
 %% given in the file `manifest.txt'.
 %%
-%% $Id: elsdoc.tex 192 2020-11-23 11:14:41Z rishi $
+%% $Id: elsdoc.tex 277 2025-01-11 16:29:11Z rishi $
 %%
 \documentclass[a4paper,12pt]{article}
 
@@ -71,7 +71,7 @@
 \author{Elsevier Ltd}
 \contact{elsarticle@stmdocs.in}
 
-\version{3.3}
+\version{3.4c}
 \date{\today}
 \maketitle
 
@@ -143,10 +143,10 @@ works perfectly with \file{hyperref.sty} in combination with
 
 The package is available at author resources page at Elsevier
 (\url{http://www.elsevier.com/locate/latex}).
-It can also be found in any of the nodes of the Comprehensive
-\TeX{} Archive Network (\textsc{ctan}), one of the primary nodes
-being
-\url{http://tug.ctan.org/tex-archive/macros/latex/contrib/elsarticle/}.
+It can also be found in Comprehensive
+\TeX{} Archive Network (\textsc{ctan}), 
+\url{https://ctan.org/pkg/elsarticle}.
+
 Please download the \file{elsarticle.dtx} which is a composite
 class with documentation and \file{elsarticle.ins} which is the
 \LaTeX{} installer file. When we compile the
@@ -154,7 +154,8 @@ class with documentation and \file{elsarticle.ins} which is the
 \file{elsarticle.cls} by
 stripping off all the documentation from the \verb+*.dtx+ file.
 The class may be moved or copied to a place, usually,
-\verb+$TEXMF/tex/latex/elsevier/+, %$%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\verb+$TEXMF/tex/latex/+ %$%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\verb+elsevier/+, 
 or a folder which will be read                   
 by \LaTeX{} during document compilation.  The \TeX{} file
 database needs updation after moving/copying class file.  Usually,
@@ -251,7 +252,7 @@ There are two types of frontmatter coding:
 \item each author is
 connected to an affiliation with a footnote marker; hence all
 authors are grouped together and affiliations follow;
-\pagebreak
+%\pagebreak
 \item authors of same affiliations are grouped together and the
 relevant affiliation follows this group. 
 \end{enumerate}
@@ -269,55 +270,64 @@ An example of coding the first type is provided below.
 \end{vquote}
 
 \begin{vquote}
-\author[1]{Jos Migchielsen\corref{cor1}%
+\author[1]{J.K. Krishnan\corref{cor1}%
   \fnref{fn1}}
-\ead{J.Migchielsen@elsevier.com}
+\ead{jkk@example.in}
 
-\author[2]{CV Radhakrishnan\fnref{fn2}}
-\ead{cvr@sayahna.org}
+\author[1,2]{Han Thane\fnref{fn2}}
+\ead{han@different.edu}
 
-\author[3]{CV Rajagopal\fnref{fn1,fn3}}
-\ead[url]{www.stmdocs.in}
+\author[3]{T. Rafeeq\fnref{fn1,fn3}}
+\ead[url]{www.nowhere.com}
 
- \cortext[cor1]{Corresponding author}
- \fntext[fn1]{This is the first author footnote.}
- \fntext[fn2]{Another author footnote, this is a very long 
-   footnote and it should be a really long footnote. But this 
-   footnote is not yet sufficiently long enough to make two 
-   lines of footnote text.}
- \fntext[fn3]{Yet another author footnote.}
-
- \affiliation[1]{organization={Elsevier B.V.}, 
-                 addressline={Radarweg 29},
-                 postcode={1043 NX}, 
-                 city={Amsterdam}, 
-                 country={The Netherlands}}
-
- \affiliation[2]{organization={Sayahna Foundation},
-                 addressline={JWRA 34, Jagathy}, 
-                 city={Trivandrum}
-                 postcode={695014}, 
-                 country={India}}
+\cortext[cor1]{Corresponding author}
+\fntext[fn1]{This is the first author footnote.}
+\fntext[fn2]{Another author footnote, this is a very long footnote and
+  it should be a really long footnote. But this footnote is not yet
+  sufficiently long enough to make two lines of footnote text.}
+\fntext[fn3]{Yet another author footnote.}
 \end{vquote}
 
 \begin{vquote}
 
- \affiliation[3]{organization={STM Document Engineering 
-                               Pvt Ltd.},
-                 addressline={Mepukada, Malayinkil}, 
-                 city={Trivandrum}
-                 postcode={695571}, 
-                 country={India}}
+\affiliation[1]{organization={Department of Physics, 
+                              J.K. Institute of Science},
+                addressline={Jawahar Nagar}, 
+                city={Trivandrum},
+%               citysep={}, % Uncomment if no comma needed 
+%                           % between city and postcode
+                postcode={695013}, 
+                state={Kerala},
+                country={India}}
+
+\affiliation[2]{organization={World Scientific University},
+                addressline={Street 29}, 
+                postcode={1011 NX}, 
+                postcodesep={}, 
+                city={Amsterdam},
+                country={The Netherlands}}
+
+\affiliation[3]{organization={University of Intelligent Studies},
+                addressline={Street 15}, 
+                city={Jabaldesh},
+                postcode={825001}, 
+                state={Orissa}, 
+                country={India}}
+
 \end{vquote}
 
 The output of the above \TeX{} source is given in Clips~\ref{clip1} and
 \ref{clip2}. The header portion or title area is given in
 Clip~\ref{clip1} and the footer area is given in Clip~\ref{clip2}.
 
+\vspace*{1pc}
+
 \def\rulecolor{blue!70}
 \src{Header of the title page.}
 \includeclip{1}{130 612 477 707}{1psingleauthorgroup.pdf}%%{elstest-1p.pdf}%single author group
 \def\rulecolor{orange}
+
+\pagebreak
 
 \def\rulecolor{blue!70}
 \src{Footer of the title page.}
@@ -360,31 +370,36 @@ The following example code provides the markup of the second type
 of author-affiliation.
 
 \begin{vquote}
-\author{Jos Migchielsen\corref{cor1}%
+\author{J.K. Krishnan\corref{cor1}%
   \fnref{fn1}}
-\ead{J.Migchielsen@elsevier.com}
- \affiliation[1]{organization={Elsevier B.V.}, 
-                 addressline={Radarweg 29},
-                 postcode={1043 NX}, 
-                 city={Amsterdam}, 
-                 country={The Netherlands}}
+\ead{jkk@example.in}
+\affiliation{organization={Department of Physics, 
+                              J.K. Institute of Science},
+                addressline={Jawahar Nagar}, 
+                city={Trivandrum},
+%               citysep={}, % Uncomment if no comma needed 
+%                           % between city and postcode
+                postcode={695013}, 
+                state={Kerala},
+                country={India}}
 
-\author{CV Radhakrishnan\fnref{fn2}}
-\ead{cvr@sayahna.org}
- \affiliation[2]{organization={Sayahna Foundation},
-                 addressline={JWRA 34, Jagathy}, 
-                 city={Trivandrum}
-                 postcode={695014}, 
-                 country={India}}
+\author{Han Thane\fnref{fn2}}
+\ead{han@different.edu}
+\affiliation{organization={World Scientific University},
+                addressline={Street 29}, 
+                postcode={1011 NX}, 
+                postcodesep={}, 
+                city={Amsterdam},
+                country={The Netherlands}}
 
-\author{CV Rajagopal\fnref{fn1,fn3}}
-\ead[url]{www.stmdocs.in}
- \affiliation[3]{organization={STM Document Engineering 
-                               Pvt Ltd.},
-                 addressline={Mepukada, Malayinkil}, 
-                 city={Trivandrum}
-                 postcode={695571}, 
-                 country={India}}
+\author{T. Rafeeq\fnref{fn1,fn3}}
+\ead[url]{www.nowhere.com}
+\affiliation{organization={University of Intelligent Studies},
+                addressline={Street 15}, 
+                city={Jabaldesh},
+                postcode={825001}, 
+                state={Orissa}, 
+                country={India}}
 \end{vquote}
 
 \vspace*{-.5pc}
@@ -586,6 +601,7 @@ string like `step' to all the item numbers.
 \includeclip{5}{1 1 313 83}{jfigs.pdf}
 \def\rulecolor{orange}
 
+\vspace*{-1pc}
 
 \section{Cross-references}
 In electronic publications, articles may be internally
@@ -766,6 +782,7 @@ Please refer below to see how to code them.
 ....
 \end{vquote}
 
+\vspace*{-1pc}
 \section{Final print}\label{sec:final}
 
 The authors can format their submission to the page size and margins
